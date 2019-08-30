@@ -1,3 +1,4 @@
+
 import java.awt.AWTException;
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -26,7 +27,7 @@ public final class TaskMailSender {
     public JFrame parent;
 
     List<ModelEnvio> mdenvio = new LinkedList<ModelEnvio>();
-    
+
     List<String> noEnviar = new LinkedList<String>();
 
     final PopupMenu popup = new PopupMenu();
@@ -160,7 +161,7 @@ public final class TaskMailSender {
                             List<String> mails = new LinkedList<String>();
                             mails.add(mde.getMail());
                             String completo = "";
-                            boolean numeros=(noEnviar==null?true:!noEnviar.contains(mde.getMail().trim()));
+                            boolean numeros = (noEnviar == null ? true : !noEnviar.contains(mde.getMail().trim()));
                             if (mde.isCompletoCountry()) {
                                 String resultado
                                         = "<div    style=\"font-size: 1.1em;\">"
@@ -169,14 +170,14 @@ public final class TaskMailSender {
                                 if (conn.esPrimerdia()) {
 
                                     resultado += conn.obtenerTabla(connectDS.SQL_PRIMER_DIA,
-                                            mesStrMesAnt,mde.isSinFacturar(),numeros);
+                                            mesStrMesAnt, mde.isSinFacturar(), numeros);
                                     resultado += "<br/>" + conn.obtenerTabla(connectDS.SQL_DIA_NORMAL,
-                                            mesStrMes,mde.isSinFacturar(),numeros);
+                                            mesStrMes, mde.isSinFacturar(), numeros);
                                     completo += resultado;
                                     //  EmailDelegate.sendMailViaGodaddy(mails, "Reporte Diario", resultado);
                                 } else {
-                                    completo += resultado + conn.obtenerTabla(connectDS.SQL_DIA_NORMAL, 
-                                            mesStrMes,mde.isSinFacturar(),numeros);
+                                    completo += resultado + conn.obtenerTabla(connectDS.SQL_DIA_NORMAL,
+                                            mesStrMes, mde.isSinFacturar(), numeros);
                                     //   EmailDelegate.sendMailViaGodaddy(mails, "Reporte Diario", conn.obtenerTabla(connectDS.SQL_DIA_NORMAL, mesStrMes));
                                 }
                             }
@@ -185,15 +186,15 @@ public final class TaskMailSender {
                                         + "<p  style=\"font-size: 1.1em;color: #7c8d87;\">Reporte Colina</p>"
                                         + "  </div>";
                                 if (conn.esPrimerdia()) {
-                                    resultado += conn.obtenerTablaColina(connectDS.SQL_PRIMER_DIA_COLINA, 
-                                            mesStrMesAntColina,numeros);
-                                    resultado += "<br/>" + conn.obtenerTablaColina(connectDS.SQL_DIA_NORMAL_COLINA, 
-                                            mesStrMesColina,numeros);
+                                    resultado += conn.obtenerTablaColina(connectDS.SQL_PRIMER_DIA_COLINA,
+                                            mesStrMesAntColina, mde.isSinFacturar(), numeros);
+                                    resultado += "<br/>" + conn.obtenerTablaColina(connectDS.SQL_DIA_NORMAL_COLINA,
+                                            mesStrMesColina, mde.isSinFacturar(), numeros);
                                     completo += resultado;
                                     //  EmailDelegate.sendMailViaGodaddy(mails, "Reporte Diario", resultado);
                                 } else {
                                     completo += resultado + conn.obtenerTablaColina(connectDS.SQL_DIA_NORMAL_COLINA,
-                                            mesStrMesColina,numeros);
+                                            mesStrMesColina, mde.isSinFacturar(), numeros);
                                     //   EmailDelegate.sendMailViaGodaddy(mails, "Reporte Diario", conn.obtenerTabla(connectDS.SQL_DIA_NORMAL, mesStrMes));
                                 }
                             }
@@ -210,7 +211,7 @@ public final class TaskMailSender {
                                 ReporteMobil repm = new ReporteMobil();
                                 String stringReporteMovil = "<div    style=\"font-size: 1.1em;\">"
                                         + "<p  style=\"font-size: 1.1em;color: #7c8d87;\">Reporte Country</p>"
-                                        + "  </div>" 
+                                        + "  </div>"
                                         + repm.obtenerTabla(numeros);
                                 mailRep += stringReporteMovil;
 
@@ -220,8 +221,8 @@ public final class TaskMailSender {
                                 ReporteMobil repm = new ReporteMobil();
                                 String stringReporteMovil = "<br/><br/><div    style=\"font-size: 1.1em;\">"
                                         + "<p  style=\"font-size: 1.1em;color: #7c8d87;\">Reporte Colina</p>"
-                                        + "  </div>" + 
-                                        repm.obtenerTablaColina(numeros);
+                                        + "  </div>"
+                                        + repm.obtenerTablaColina(numeros);
                                 mailRep += stringReporteMovil;
 
                             }

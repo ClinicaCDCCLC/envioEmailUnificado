@@ -1,3 +1,4 @@
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,117 +17,409 @@ import java.text.NumberFormat;
  */
 public class ReporteMobil {
 
-    public static final String SQL_REPORTE = "IF(DAY(GETDATE())= 01) "
-            + " "
-            + "      BEGIN "
-            + " "
-            + "            SELECT   FechaRegistro,Dia1, Mes1, Año,   OcupacionDia ,  OcupacionProy,OcupacionPpto ,  OcupDiasCama, OcupDiasCamaProy,   OcupDiasCamaPpto,EgrHospi,EGHPPto,EHospiProy,  Cx, CxProy,TCXPto,  CxHosp, CxHospProy, TCXHPto, "
-            + " "
-            + "CxAmb, CxAmbProy, TCXAPto,  Par_Ces, Par_CesProy, TCXPCPto,  CDiag, CDiagProy, TCXCDPto,  Urg, "
-            + " "
-            + "UrgTProy,TCUPto,  IngUrg, IngUrgProy, TIUPto,  FacNeta, FacNetaProy,TFPPto,cumpOcup, ClrOcup, cumpCamas, ClrCamas, cumpEhosp,ClrEhosp, cumpCx , ClrCx, cumpHosp, ClrHosp, cumpAmb, ClrAmb, cumpParCes, ClrParCes, "
-            + " "
-            + "cumpDiag, ClrDiag, cumpUrg, ClrUrg, cumpIngUrg, ClrIngUrg, cumpFacNeta, ClrFacNeta "
-            + " "
-            + "            FROM        VwInformeDiarioProy "
-            + " "
-            + "            WHERE     (Dia1 = DAY(GETDATE()-1)) "
-            + " "
-            + "            AND (MONTH(FechaRegistro) = MONTH(GETDATE()-1)) AND (YEAR(FechaRegistro) = YEAR(GETDATE()-1)) "
-            + " "
-            + "     END "
-            + " "
-            + "ELSE "
-            + " "
-            + "     BEGIN "
-            + " "
-            + "IF(DAY(GETDATE())= 02 ) "
-            + " "
-            + "            BEGIN "
-            + " "
-            + "                  SELECT   FechaRegistro,Dia1, Mes1, Año,   OcupacionDia ,  OcupacionProy,OcupacionPpto ,  OcupDiasCama, OcupDiasCamaProy,   OcupDiasCamaPpto,EgrHospi,EGHPPto,EHospiProy,  Cx, CxProy,TCXPto,  CxHosp, CxHospProy, TCXHPto,CxAmb, CxAmbProy, TCXAPto,  Par_Ces, Par_CesProy, TCXPCPto,  CDiag, CDiagProy, TCXCDPto,  Urg, "
-            + " "
-            + "UrgTProy,TCUPto,  IngUrg, IngUrgProy, TIUPto,  FacNeta, FacNetaProy,TFPPto,cumpOcup, ClrOcup, cumpCamas, ClrCamas,cumpEhosp,ClrEhosp, cumpCx, ClrCx, cumpHosp, ClrHosp, cumpAmb, ClrAmb, cumpParCes, ClrParCes, "
-            + " "
-            + "cumpDiag, ClrDiag, cumpUrg, ClrUrg, cumpIngUrg, ClrIngUrg, cumpFacNeta, ClrFacNeta "
-            + " "
-            + "                  FROM        VwInformeDiarioProy "
-            + " "
-            + "                  WHERE     (Dia1 = DAY(GETDATE()-1)) AND (MONTH(FechaRegistro) = MONTH(GETDATE())) AND (YEAR(FechaRegistro) = YEAR(GETDATE()-1)) "
-            + " "
-            + "            END "
-            + " "
-            + "ELSE "
-            + " "
-            + "            BEGIN "
-            + " "
-            + "            SELECT   FechaRegistro,Dia1, Mes1, Año,   OcupacionDia ,  OcupacionProy,OcupacionPpto ,  OcupDiasCama, OcupDiasCamaProy,   OcupDiasCamaPpto,EgrHospi,EGHPPto,EHospiProy,  Cx, CxProy,TCXPto,  CxHosp, CxHospProy, TCXHPto, "
-            + " "
-            + "CxAmb, CxAmbProy, TCXAPto,  Par_Ces, Par_CesProy, TCXPCPto,  CDiag, CDiagProy, TCXCDPto,  Urg,UrgTProy,TCUPto,  IngUrg, IngUrgProy, TIUPto,  FacNeta, FacNetaProy,TFPPto,cumpOcup, ClrOcup, cumpCamas, ClrCamas,cumpEhosp,ClrEhosp, cumpCx, ClrCx, cumpHosp, ClrHosp, cumpAmb, ClrAmb, cumpParCes, ClrParCes,cumpDiag, ClrDiag, cumpUrg, ClrUrg, cumpIngUrg, ClrIngUrg, cumpFacNeta,ClrFacNeta "
-            + " "
-            + "            FROM        VwInformeDiarioProy "
-            + " "
-            + "            WHERE     (Dia1 = DAY(GETDATE()-1)) AND (MONTH(FechaRegistro-1) = MONTH(GETDATE())) AND (YEAR(FechaRegistro) = YEAR(GETDATE()-1)) "
-            + " "
-            + "            END "
-            + " "
-            + "END";
+    public static final String SQL_REPORTE = "IF( Day(Getdate()) = 01 ) \n"
+            + "  BEGIN \n"
+            + "      SELECT fecharegistro, \n"
+            + "             dia1, \n"
+            + "             mes1, \n"
+            + "             a�o, \n"
+            + "             ocupaciondia, \n"
+            + "             ocupacionproy, \n"
+            + "             ocupacionppto, \n"
+            + "             ocupdiascama, \n"
+            + "             ocupdiascamaproy, \n"
+            + "             ocupdiascamappto, \n"
+            + "             egrhospi, \n"
+            + "             eghppto, \n"
+            + "             ehospiproy, \n"
+            + "             cx, \n"
+            + "             cxproy, \n"
+            + "             tcxpto, \n"
+            + "             cxhosp, \n"
+            + "             cxhospproy, \n"
+            + "             tcxhpto, \n"
+            + "             cxamb, \n"
+            + "             cxambproy, \n"
+            + "             tcxapto, \n"
+            + "             par_ces, \n"
+            + "             par_cesproy, \n"
+            + "             tcxpcpto, \n"
+            + "             cdiag, \n"
+            + "             cdiagproy, \n"
+            + "             tcxcdpto, \n"
+            + "             urg, \n"
+            + "             urgtproy, \n"
+            + "             tcupto, \n"
+            + "             ingurg, \n"
+            + "             ingurgproy, \n"
+            + "             tiupto, \n"
+            + "             facneta, \n"
+            + "             facnetaproy, \n"
+            + "             tfppto, \n"
+            + "             cumpocup, \n"
+            + "             clrocup, \n"
+            + "             cumpcamas, \n"
+            + "             clrcamas, \n"
+            + "             cumpehosp, \n"
+            + "             clrehosp, \n"
+            + "             cumpcx, \n"
+            + "             clrcx, \n"
+            + "             cumphosp, \n"
+            + "             clrhosp, \n"
+            + "             cumpamb, \n"
+            + "             clramb, \n"
+            + "             cumpparces, \n"
+            + "             clrparces, \n"
+            + "             cumpdiag, \n"
+            + "             clrdiag, \n"
+            + "             cumpurg, \n"
+            + "             clrurg, \n"
+            + "             cumpingurg, \n"
+            + "             clringurg, \n"
+            + "             cumpfacneta, \n"
+            + "             clrfacneta \n"
+            + "      FROM   vwinformediarioproy \n"
+            + "      WHERE  ( dia1 = Day(Getdate() - 1) ) \n"
+            + "             AND ( Month(fecharegistro) = Month(Getdate() - 1) ) \n"
+            + "             AND ( Year(fecharegistro) = Year(Getdate() - 1) ) \n"
+            + "  END \n"
+            + "ELSE \n"
+            + "  BEGIN \n"
+            + "      IF( Day(Getdate()) = 02 ) \n"
+            + "        BEGIN \n"
+            + "            SELECT fecharegistro, \n"
+            + "                   dia1, \n"
+            + "                   mes1, \n"
+            + "                   a�o, \n"
+            + "                   ocupaciondia, \n"
+            + "                   ocupacionproy, \n"
+            + "                   ocupacionppto, \n"
+            + "                   ocupdiascama, \n"
+            + "                   ocupdiascamaproy, \n"
+            + "                   ocupdiascamappto, \n"
+            + "                   egrhospi, \n"
+            + "                   eghppto, \n"
+            + "                   ehospiproy, \n"
+            + "                   cx, \n"
+            + "                   cxproy, \n"
+            + "                   tcxpto, \n"
+            + "                   cxhosp, \n"
+            + "                   cxhospproy, \n"
+            + "                   tcxhpto, \n"
+            + "                   cxamb, \n"
+            + "                   cxambproy, \n"
+            + "                   tcxapto, \n"
+            + "                   par_ces, \n"
+            + "                   par_cesproy, \n"
+            + "                   tcxpcpto, \n"
+            + "                   cdiag, \n"
+            + "                   cdiagproy, \n"
+            + "                   tcxcdpto, \n"
+            + "                   urg, \n"
+            + "                   urgtproy, \n"
+            + "                   tcupto, \n"
+            + "                   ingurg, \n"
+            + "                   ingurgproy, \n"
+            + "                   tiupto, \n"
+            + "                   facneta, \n"
+            + "                   facnetaproy, \n"
+            + "                   tfppto, \n"
+            + "                   cumpocup, \n"
+            + "                   clrocup, \n"
+            + "                   cumpcamas, \n"
+            + "                   clrcamas, \n"
+            + "                   cumpehosp, \n"
+            + "                   clrehosp, \n"
+            + "                   cumpcx, \n"
+            + "                   clrcx, \n"
+            + "                   cumphosp, \n"
+            + "                   clrhosp, \n"
+            + "                   cumpamb, \n"
+            + "                   clramb, \n"
+            + "                   cumpparces, \n"
+            + "                   clrparces, \n"
+            + "                   cumpdiag, \n"
+            + "                   clrdiag, \n"
+            + "                   cumpurg, \n"
+            + "                   clrurg, \n"
+            + "                   cumpingurg, \n"
+            + "                   clringurg, \n"
+            + "                   cumpfacneta, \n"
+            + "                   clrfacneta \n"
+            + "            FROM   vwinformediarioproy \n"
+            + "            WHERE  ( dia1 = Day(Getdate() - 1) ) \n"
+            + "                   AND ( Month(fecharegistro) = Month(Getdate()) ) \n"
+            + "                   AND ( Year(fecharegistro) = Year(Getdate() - 1) ) \n"
+            + "        END \n"
+            + "      ELSE \n"
+            + "        BEGIN \n"
+            + "            SELECT fecharegistro, \n"
+            + "                   dia1, \n"
+            + "                   mes1, \n"
+            + "                   a�o, \n"
+            + "                   ocupaciondia, \n"
+            + "                   ocupacionproy, \n"
+            + "                   ocupacionppto, \n"
+            + "                   ocupdiascama, \n"
+            + "                   ocupdiascamaproy, \n"
+            + "                   ocupdiascamappto, \n"
+            + "                   egrhospi, \n"
+            + "                   eghppto, \n"
+            + "                   ehospiproy, \n"
+            + "                   cx, \n"
+            + "                   cxproy, \n"
+            + "                   tcxpto, \n"
+            + "                   cxhosp, \n"
+            + "                   cxhospproy, \n"
+            + "                   tcxhpto, \n"
+            + "                   cxamb, \n"
+            + "                   cxambproy, \n"
+            + "                   tcxapto, \n"
+            + "                   par_ces, \n"
+            + "                   par_cesproy, \n"
+            + "                   tcxpcpto, \n"
+            + "                   cdiag, \n"
+            + "                   cdiagproy, \n"
+            + "                   tcxcdpto, \n"
+            + "                   urg, \n"
+            + "                   urgtproy, \n"
+            + "                   tcupto, \n"
+            + "                   ingurg, \n"
+            + "                   ingurgproy, \n"
+            + "                   tiupto, \n"
+            + "                   facneta, \n"
+            + "                   facnetaproy, \n"
+            + "                   tfppto, \n"
+            + "                   cumpocup, \n"
+            + "                   clrocup, \n"
+            + "                   cumpcamas, \n"
+            + "                   clrcamas, \n"
+            + "                   cumpehosp, \n"
+            + "                   clrehosp, \n"
+            + "                   cumpcx, \n"
+            + "                   clrcx, \n"
+            + "                   cumphosp, \n"
+            + "                   clrhosp, \n"
+            + "                   cumpamb, \n"
+            + "                   clramb, \n"
+            + "                   cumpparces, \n"
+            + "                   clrparces, \n"
+            + "                   cumpdiag, \n"
+            + "                   clrdiag, \n"
+            + "                   cumpurg, \n"
+            + "                   clrurg, \n"
+            + "                   cumpingurg, \n"
+            + "                   clringurg, \n"
+            + "                   cumpfacneta, \n"
+            + "                   clrfacneta \n"
+            + "            FROM   vwinformediarioproy \n"
+            + "            WHERE  ( dia1 = Day(Getdate() - 1) ) \n"
+            + "                   AND ( Month(fecharegistro - 1) = Month(Getdate()) ) \n"
+            + "                   AND ( Year(fecharegistro) = Year(Getdate() - 1) ) \n"
+            + "        END \n"
+            + "  END;";
 
-    public static final String SQL_REPORTE_COLINA = "IF(DAY(GETDATE())= 01) "
-            + " "
-            + "      BEGIN "
-            + " "
-            + "            SELECT   FechaRegistro,Dia1, Mes1, Año,   OcupacionDia ,  OcupacionProy,OcupacionPpto ,  OcupDiasCama, OcupDiasCamaProy,   OcupDiasCamaPpto,EgrHospi,EGHPPto,EHospiProy,  Cx, CxProy,TCXPto,  CxHosp, CxHospProy, TCXHPto, "
-            + " "
-            + "CxAmb, CxAmbProy, TCXAPto,  Par_Ces, Par_CesProy, TCXPCPto,   Urg, "
-            + " "
-            + "UrgTProy,TCUPto,  IngUrg, IngUrgProy, TIUPto,  FacNeta, FacNetaProy,TFPPto,cumpOcup, ClrOcup, cumpCamas, ClrCamas, cumpEhosp,ClrEhosp, cumpCx , ClrCx, cumpHosp, ClrHosp, cumpAmb, ClrAmb, cumpParCes, ClrParCes, "
-            + " "
-            + "cumpUrg, ClrUrg, cumpIngUrg, ClrIngUrg, cumpFacNeta, ClrFacNeta "
-            + " "
-            + "            FROM        VwInformeDiarioProyCol "
-            + " "
-            + "            WHERE     (Dia1 = DAY(GETDATE()-1)) "
-            + " "
-            + "            AND (MONTH(FechaRegistro) = MONTH(GETDATE()-1)) AND (YEAR(FechaRegistro) = YEAR(GETDATE()-1)) "
-            + " "
-            + "     END "
-            + " "
-            + "ELSE "
-            + " "
-            + "     BEGIN "
-            + " "
-            + "IF(DAY(GETDATE())= 02 ) "
-            + " "
-            + "            BEGIN "
-            + " "
-            + "                  SELECT   FechaRegistro,Dia1, Mes1, Año,   OcupacionDia ,  OcupacionProy,OcupacionPpto ,  OcupDiasCama, OcupDiasCamaProy,   OcupDiasCamaPpto,EgrHospi,EGHPPto,EHospiProy,  Cx, CxProy,TCXPto,  CxHosp, CxHospProy, TCXHPto,CxAmb, CxAmbProy, TCXAPto,  Par_Ces, Par_CesProy, TCXPCPto,   Urg, "
-            + " "
-            + "UrgTProy,TCUPto,  IngUrg, IngUrgProy, TIUPto,  FacNeta, FacNetaProy,TFPPto,cumpOcup, ClrOcup, cumpCamas, ClrCamas,cumpEhosp,ClrEhosp, cumpCx, ClrCx, cumpHosp, ClrHosp, cumpAmb, ClrAmb, cumpParCes, ClrParCes, "
-            + " "
-            + " cumpUrg, ClrUrg, cumpIngUrg, ClrIngUrg, cumpFacNeta, ClrFacNeta "
-            + " "
-            + "                  FROM        VwInformeDiarioProyCol "
-            + " "
-            + "                  WHERE     (Dia1 = DAY(GETDATE()-1)) AND (MONTH(FechaRegistro) = MONTH(GETDATE())) AND (YEAR(FechaRegistro) = YEAR(GETDATE()-1)) "
-            + " "
-            + "            END "
-            + " "
-            + "ELSE "
-            + " "
-            + "            BEGIN "
-            + " "
-            + "            SELECT   FechaRegistro,Dia1, Mes1, Año,   OcupacionDia ,  OcupacionProy,OcupacionPpto ,  OcupDiasCama, OcupDiasCamaProy,   OcupDiasCamaPpto,EgrHospi,EGHPPto,EHospiProy,  Cx, CxProy,TCXPto,  CxHosp, CxHospProy, TCXHPto, "
-            + " "
-            + "CxAmb, CxAmbProy, TCXAPto,  Par_Ces, Par_CesProy, TCXPCPto,    Urg,UrgTProy,TCUPto,  IngUrg, IngUrgProy, TIUPto,  FacNeta, FacNetaProy,TFPPto,cumpOcup, ClrOcup, cumpCamas, ClrCamas,cumpEhosp,ClrEhosp, cumpCx, ClrCx, cumpHosp, ClrHosp, cumpAmb, ClrAmb, cumpParCes, ClrParCes,  cumpUrg, ClrUrg, cumpIngUrg, ClrIngUrg, cumpFacNeta,ClrFacNeta "
-            + " "
-            + "            FROM        VwInformeDiarioProyCol "
-            + " "
-            + "            WHERE     (Dia1 = DAY(GETDATE()-1)) AND (MONTH(FechaRegistro-1) = MONTH(GETDATE())) AND (YEAR(FechaRegistro) = YEAR(GETDATE()-1)) "
-            + " "
-            + "            END "
-            + " "
-            + "END";
+    public static final String SQL_REPORTE_COLINA = "IF( Day(Getdate()) = 01 ) \n"
+            + "  BEGIN \n"
+            + "      SELECT fecharegistro, \n"
+            + "             dia1, \n"
+            + "             mes1, \n"
+            + "             a�o, \n"
+            + "             ocupaciondia, \n"
+            + "             ocupacionproy, \n"
+            + "             ocupacionppto, \n"
+            + "             ocupdiascama, \n"
+            + "             ocupdiascamaproy, \n"
+            + "             ocupdiascamappto, \n"
+            + "             egrhospi, \n"
+            + "             eghppto, \n"
+            + "             ehospiproy, \n"
+            + "             cx, \n"
+            + "             cxproy, \n"
+            + "             tcxpto, \n"
+            + "             cxhosp, \n"
+            + "             cxhospproy, \n"
+            + "             tcxhpto, \n"
+            + "             cxamb, \n"
+            + "             cxambproy, \n"
+            + "             tcxapto, \n"
+            + "             par_ces, \n"
+            + "             par_cesproy, \n"
+            + "             tcxpcpto, \n"
+            + "             cdiag, \n"
+            + "             cdiagproy, \n"
+            + "             tcxcdpto, \n"
+            + "             urg, \n"
+            + "             urgtproy, \n"
+            + "             tcupto, \n"
+            + "             ingurg, \n"
+            + "             ingurgproy, \n"
+            + "             tiupto, \n"
+            + "             facneta, \n"
+            + "             facnetaproy, \n"
+            + "             tfppto, \n"
+            + "             cumpocup, \n"
+            + "             clrocup, \n"
+            + "             cumpcamas, \n"
+            + "             clrcamas, \n"
+            + "             cumpehosp, \n"
+            + "             clrehosp, \n"
+            + "             cumpcx, \n"
+            + "             clrcx, \n"
+            + "             cumphosp, \n"
+            + "             clrhosp, \n"
+            + "             cumpamb, \n"
+            + "             clramb, \n"
+            + "             cumpparces, \n"
+            + "             clrparces, \n"
+            + "             cumpdiag, \n"
+            + "             clrdiag, \n"
+            + "             cumpurg, \n"
+            + "             clrurg, \n"
+            + "             cumpingurg, \n"
+            + "             clringurg, \n"
+            + "             cumpfacneta, \n"
+            + "             clrfacneta \n"
+            + "      FROM   vwinformediarioproySahiCol\n"
+            + "      WHERE  ( dia1 = Day(Getdate() - 1) ) \n"
+            + "             AND ( Month(fecharegistro) = Month(Getdate() - 1) ) \n"
+            + "             AND ( Year(fecharegistro) = Year(Getdate() - 1) ) \n"
+            + "  END \n"
+            + "ELSE \n"
+            + "  BEGIN \n"
+            + "      IF( Day(Getdate()) = 02 ) \n"
+            + "        BEGIN \n"
+            + "            SELECT fecharegistro, \n"
+            + "                   dia1, \n"
+            + "                   mes1, \n"
+            + "                   a�o, \n"
+            + "                   ocupaciondia, \n"
+            + "                   ocupacionproy, \n"
+            + "                   ocupacionppto, \n"
+            + "                   ocupdiascama, \n"
+            + "                   ocupdiascamaproy, \n"
+            + "                   ocupdiascamappto, \n"
+            + "                   egrhospi, \n"
+            + "                   eghppto, \n"
+            + "                   ehospiproy, \n"
+            + "                   cx, \n"
+            + "                   cxproy, \n"
+            + "                   tcxpto, \n"
+            + "                   cxhosp, \n"
+            + "                   cxhospproy, \n"
+            + "                   tcxhpto, \n"
+            + "                   cxamb, \n"
+            + "                   cxambproy, \n"
+            + "                   tcxapto, \n"
+            + "                   par_ces, \n"
+            + "                   par_cesproy, \n"
+            + "                   tcxpcpto, \n"
+            + "                   cdiag, \n"
+            + "                   cdiagproy, \n"
+            + "                   tcxcdpto, \n"
+            + "                   urg, \n"
+            + "                   urgtproy, \n"
+            + "                   tcupto, \n"
+            + "                   ingurg, \n"
+            + "                   ingurgproy, \n"
+            + "                   tiupto, \n"
+            + "                   facneta, \n"
+            + "                   facnetaproy, \n"
+            + "                   tfppto, \n"
+            + "                   cumpocup, \n"
+            + "                   clrocup, \n"
+            + "                   cumpcamas, \n"
+            + "                   clrcamas, \n"
+            + "                   cumpehosp, \n"
+            + "                   clrehosp, \n"
+            + "                   cumpcx, \n"
+            + "                   clrcx, \n"
+            + "                   cumphosp, \n"
+            + "                   clrhosp, \n"
+            + "                   cumpamb, \n"
+            + "                   clramb, \n"
+            + "                   cumpparces, \n"
+            + "                   clrparces, \n"
+            + "                   cumpdiag, \n"
+            + "                   clrdiag, \n"
+            + "                   cumpurg, \n"
+            + "                   clrurg, \n"
+            + "                   cumpingurg, \n"
+            + "                   clringurg, \n"
+            + "                   cumpfacneta, \n"
+            + "                   clrfacneta \n"
+            + "            FROM   vwinformediarioproySahiCol\n"
+            + "            WHERE  ( dia1 = Day(Getdate() - 1) ) \n"
+            + "                   AND ( Month(fecharegistro) = Month(Getdate()) ) \n"
+            + "                   AND ( Year(fecharegistro) = Year(Getdate() - 1) ) \n"
+            + "        END \n"
+            + "      ELSE \n"
+            + "        BEGIN \n"
+            + "            SELECT fecharegistro, \n"
+            + "                   dia1, \n"
+            + "                   mes1, \n"
+            + "                   a�o, \n"
+            + "                   ocupaciondia, \n"
+            + "                   ocupacionproy, \n"
+            + "                   ocupacionppto, \n"
+            + "                   ocupdiascama, \n"
+            + "                   ocupdiascamaproy, \n"
+            + "                   ocupdiascamappto, \n"
+            + "                   egrhospi, \n"
+            + "                   eghppto, \n"
+            + "                   ehospiproy, \n"
+            + "                   cx, \n"
+            + "                   cxproy, \n"
+            + "                   tcxpto, \n"
+            + "                   cxhosp, \n"
+            + "                   cxhospproy, \n"
+            + "                   tcxhpto, \n"
+            + "                   cxamb, \n"
+            + "                   cxambproy, \n"
+            + "                   tcxapto, \n"
+            + "                   par_ces, \n"
+            + "                   par_cesproy, \n"
+            + "                   tcxpcpto, \n"
+            + "                   cdiag, \n"
+            + "                   cdiagproy, \n"
+            + "                   tcxcdpto, \n"
+            + "                   urg, \n"
+            + "                   urgtproy, \n"
+            + "                   tcupto, \n"
+            + "                   ingurg, \n"
+            + "                   ingurgproy, \n"
+            + "                   tiupto, \n"
+            + "                   facneta, \n"
+            + "                   facnetaproy, \n"
+            + "                   tfppto, \n"
+            + "                   cumpocup, \n"
+            + "                   clrocup, \n"
+            + "                   cumpcamas, \n"
+            + "                   clrcamas, \n"
+            + "                   cumpehosp, \n"
+            + "                   clrehosp, \n"
+            + "                   cumpcx, \n"
+            + "                   clrcx, \n"
+            + "                   cumphosp, \n"
+            + "                   clrhosp, \n"
+            + "                   cumpamb, \n"
+            + "                   clramb, \n"
+            + "                   cumpparces, \n"
+            + "                   clrparces, \n"
+            + "                   cumpdiag, \n"
+            + "                   clrdiag, \n"
+            + "                   cumpurg, \n"
+            + "                   clrurg, \n"
+            + "                   cumpingurg, \n"
+            + "                   clringurg, \n"
+            + "                   cumpfacneta, \n"
+            + "                   clrfacneta \n"
+            + "            FROM   vwinformediarioproySahiCol\n"
+            + "            WHERE  ( dia1 = Day(Getdate() - 1) ) \n"
+            + "                   AND ( Month(fecharegistro - 1) = Month(Getdate()) ) \n"
+            + "                   AND ( Year(fecharegistro) = Year(Getdate() - 1) ) \n"
+            + "        END \n"
+            + "  END;";
 
     private String color(String valor, int color) {
         switch (color) {
@@ -178,7 +471,7 @@ public class ReporteMobil {
         String año = "";
         NumberFormat nf = NumberFormat.getInstance();
         try {
-            con = new connectDS().conn();
+            con = new connectDS().conn_country();
 
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
@@ -399,32 +692,29 @@ public class ReporteMobil {
 
                 resultado = resultado + "</tr>";
 
-                if(numeros){
-                resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
+                if (numeros) {
+                    resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
 
-                resultado = resultado + "<td style='font-weight: 900;'> ";
-                resultado = resultado + "Total Fac. Neta M$";
-                resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='font-weight: 900;'> ";
+                    resultado = resultado + "Total Fac. Neta M$";
+                    resultado = resultado + "</td>";
 
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("FacNeta"));
-                resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='text-align:  right;'> ";
+                    resultado = resultado + "" + nf.format(rs.getLong("FacNeta"));
+                    resultado = resultado + "</td>";
 
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("FacNetaProy"));
-                resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='text-align:  right;'> ";
+                    resultado = resultado + "" + nf.format(rs.getLong("FacNetaProy"));
+                    resultado = resultado + "</td>";
 
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("TFPPto"));
-                resultado = resultado + "</td>";
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + color(df.format((float) (rs.getFloat("cumpFacNeta") * 100)) + "%", rs.getInt("ClrFacNeta")) + "";
-                resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='text-align:  right;'> ";
+                    resultado = resultado + "" + nf.format(rs.getLong("TFPPto"));
+                    resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='text-align:  right;'> ";
+                    resultado = resultado + color(df.format((float) (rs.getFloat("cumpFacNeta") * 100)) + "%", rs.getInt("ClrFacNeta")) + "";
+                    resultado = resultado + "</td>";
                 }
                 resultado = resultado + "</tr>";
-//               resultado = resultado + "<td '> ";
-//                resultado = resultado + rs.getLong("Dia");
-//                resultado = resultado + "</td>";
             }
 
         } catch (Exception e) {
@@ -451,43 +741,9 @@ public class ReporteMobil {
         }
 
         resultado = resultado + "</tbody>";
-//        resultado = resultado + "<tfoot><tr style='background-color: rgb(40,98,161);'><td colspan='4'></td></tr>";
-//        resultado = resultado + "<tr style='color:   black;font-size: 1.1em;'>";
-//        resultado = resultado + "<td>Pendientes HB</td>";
-//        resultado = resultado + "<td  style='text-align:  right;'>" + nf.format(phb) + "</td>";
-//        resultado = resultado + "<td>" + "" + "</td>";
-//        resultado = resultado + "<td >" + "" + "</td>";
-//        resultado = resultado + "</tr>";
-//
-//        resultado = resultado + "<tr style=\"color:   black;font-size: 1.1em;\">";
-//        resultado = resultado + "<td>Salidas probables</td>";
-//        resultado = resultado + "<td  style='text-align:  right;'>" + nf.format(sprobable) + "</td>";
-//        resultado = resultado + "<td>" + "" + "</td>";
-//        resultado = resultado + "<td >" + "" + "</td>";
-//        resultado = resultado + "</tr>";
-//
-//        resultado = resultado + "<tr style=\"color:   black;font-size: 1.1em;\">";
-//        resultado = resultado + "<td>Cx prog.</td>";
-//        resultado = resultado + "<td  style='text-align:  right;'>" + nf.format(cxProg) + "</td>";
-//        resultado = resultado + "<td>" + "" + "</td>";
-//        resultado = resultado + "<td >" + "" + "</td>";
-//        resultado = resultado + "</tr>";
-//        resultado = resultado + "</tfoot>";
         resultado = resultado + "</table>";
 
         String cabecera = "<style>"
-                //                + "@media only screen and (max-device-width: 480px) { "
-                //                + "    .mail { "
-                //                + "          display:none !important; "
-                //                + "     } "
-                //                + "} "
-                //                + " @media only screen and (min-device-width: 768px) and (max-device-width: 1024px){ "
-                //                + "    .mail { "
-                //                + "          display:none !important; "
-                //                + "     } "
-                //                + "}"
-                //                + " "
-
                 + ".mail { "
                 + " float: right !important; "
                 + "} "
@@ -549,7 +805,6 @@ public class ReporteMobil {
     }
 
     public String obtenerTablaColina(boolean numeros) {
-
         String resultado = "";
 
         Connection con = null;
@@ -567,7 +822,7 @@ public class ReporteMobil {
         String año = "";
         NumberFormat nf = NumberFormat.getInstance();
         try {
-            con = new connectDS().conn();
+            con = new connectDS().conn_colina();
 
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
@@ -576,9 +831,6 @@ public class ReporteMobil {
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(2);
             while (rs.next() && seguir) {
-//                phb = rs.getLong("HPendientes");
-//                sprobable = rs.getLong("SProbables");
-//                cxProg = rs.getLong("CxSProgram");
                 dia = rs.getString("Dia1");
                 mes = rs.getString("Mes1");
                 año = rs.getString("Año");
@@ -726,25 +978,25 @@ public class ReporteMobil {
                 resultado = resultado + "</td>";
                 resultado = resultado + "</tr>";
 
-//                resultado = resultado + "<tr class='grid'>";
-//                resultado = resultado + "<td> ";
-//                resultado = resultado + "CDiag.";
-//                resultado = resultado + "</td>";
-//                resultado = resultado + "<td style='text-align:  right;'> ";
-//                resultado = resultado + "" + nf.format(rs.getLong("CDiag"));
-//                resultado = resultado + "</td>";
-//                resultado = resultado + "<td style='text-align:  right;'> ";
-//                resultado = resultado + "" + nf.format(rs.getLong("CDiagProy"));
-//                resultado = resultado + "</td>";
-//                resultado = resultado + "<td style='text-align:  right;'> ";
-//                resultado = resultado + "" + nf.format(rs.getLong("TCXCDPto"));
-//                resultado = resultado + "</td>";
-//                resultado = resultado + "<td style='text-align:  right;'> ";
-//                resultado = resultado + color(df.format((float) (rs.getFloat("cumpDiag") * 100)) + "%", rs.getInt("ClrDiag"));
-//                resultado = resultado + "</td>";
-//                resultado = resultado + "</tr>";
-
                 resultado = resultado + "<tr class='grid'>";
+                resultado = resultado + "<td> ";
+                resultado = resultado + "CDiag.";
+                resultado = resultado + "</td>";
+                resultado = resultado + "<td style='text-align:  right;'> ";
+                resultado = resultado + "" + nf.format(rs.getLong("CDiag"));
+                resultado = resultado + "</td>";
+                resultado = resultado + "<td style='text-align:  right;'> ";
+                resultado = resultado + "" + nf.format(rs.getLong("CDiagProy"));
+                resultado = resultado + "</td>";
+                resultado = resultado + "<td style='text-align:  right;'> ";
+                resultado = resultado + "" + nf.format(rs.getLong("TCXCDPto"));
+                resultado = resultado + "</td>";
+                resultado = resultado + "<td style='text-align:  right;'> ";
+                resultado = resultado + color(df.format((float) (rs.getFloat("cumpDiag") * 100)) + "%", rs.getInt("ClrDiag"));
+                resultado = resultado + "</td>";
+                resultado = resultado + "</tr>";
+
+                resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
 
                 resultado = resultado + "<td style='font-weight: 900;'> ";
                 resultado = resultado + "Urg";
@@ -766,7 +1018,7 @@ public class ReporteMobil {
 
                 resultado = resultado + "</tr>";
 
-                resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
+                resultado = resultado + "<tr class='grid'>";
 
                 resultado = resultado + "<td style='font-weight: 900;'> ";
                 resultado = resultado + "Ing Urg";
@@ -787,34 +1039,30 @@ public class ReporteMobil {
                 resultado = resultado + "</td>";
 
                 resultado = resultado + "</tr>";
-                
-                if(numeros){
 
-                resultado = resultado + "<tr class='grid'>";
+                if (numeros) {
+                    resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
 
-                resultado = resultado + "<td style='font-weight: 900;'> ";
-                resultado = resultado + "Total Fac. Neta M$";
-                resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='font-weight: 900;'> ";
+                    resultado = resultado + "Total Fac. Neta M$";
+                    resultado = resultado + "</td>";
 
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("FacNeta"));
-                resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='text-align:  right;'> ";
+                    resultado = resultado + "" + nf.format(rs.getLong("FacNeta"));
+                    resultado = resultado + "</td>";
 
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("FacNetaProy"));
-                resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='text-align:  right;'> ";
+                    resultado = resultado + "" + nf.format(rs.getLong("FacNetaProy"));
+                    resultado = resultado + "</td>";
 
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("TFPPto"));
-                resultado = resultado + "</td>";
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + color(df.format((float) (rs.getFloat("cumpFacNeta") * 100)) + "%", rs.getInt("ClrFacNeta")) + "";
-                resultado = resultado + "</td>";
-                resultado = resultado + "</tr>";
+                    resultado = resultado + "<td style='text-align:  right;'> ";
+                    resultado = resultado + "" + nf.format(rs.getLong("TFPPto"));
+                    resultado = resultado + "</td>";
+                    resultado = resultado + "<td style='text-align:  right;'> ";
+                    resultado = resultado + color(df.format((float) (rs.getFloat("cumpFacNeta") * 100)) + "%", rs.getInt("ClrFacNeta")) + "";
+                    resultado = resultado + "</td>";
                 }
-//               resultado = resultado + "<td '> ";
-//                resultado = resultado + rs.getLong("Dia");
-//                resultado = resultado + "</td>";
+                resultado = resultado + "</tr>";
             }
 
         } catch (Exception e) {
@@ -841,43 +1089,9 @@ public class ReporteMobil {
         }
 
         resultado = resultado + "</tbody>";
-//        resultado = resultado + "<tfoot><tr style='background-color: rgb(40,98,161);'><td colspan='4'></td></tr>";
-//        resultado = resultado + "<tr style='color:   black;font-size: 1.1em;'>";
-//        resultado = resultado + "<td>Pendientes HB</td>";
-//        resultado = resultado + "<td  style='text-align:  right;'>" + nf.format(phb) + "</td>";
-//        resultado = resultado + "<td>" + "" + "</td>";
-//        resultado = resultado + "<td >" + "" + "</td>";
-//        resultado = resultado + "</tr>";
-//
-//        resultado = resultado + "<tr style=\"color:   black;font-size: 1.1em;\">";
-//        resultado = resultado + "<td>Salidas probables</td>";
-//        resultado = resultado + "<td  style='text-align:  right;'>" + nf.format(sprobable) + "</td>";
-//        resultado = resultado + "<td>" + "" + "</td>";
-//        resultado = resultado + "<td >" + "" + "</td>";
-//        resultado = resultado + "</tr>";
-//
-//        resultado = resultado + "<tr style=\"color:   black;font-size: 1.1em;\">";
-//        resultado = resultado + "<td>Cx prog.</td>";
-//        resultado = resultado + "<td  style='text-align:  right;'>" + nf.format(cxProg) + "</td>";
-//        resultado = resultado + "<td>" + "" + "</td>";
-//        resultado = resultado + "<td >" + "" + "</td>";
-//        resultado = resultado + "</tr>";
-//        resultado = resultado + "</tfoot>";
         resultado = resultado + "</table>";
 
         String cabecera = "<style>"
-                //                + "@media only screen and (max-device-width: 480px) { "
-                //                + "    .mail { "
-                //                + "          display:none !important; "
-                //                + "     } "
-                //                + "} "
-                //                + " @media only screen and (min-device-width: 768px) and (max-device-width: 1024px){ "
-                //                + "    .mail { "
-                //                + "          display:none !important; "
-                //                + "     } "
-                //                + "}"
-                //                + " "
-
                 + ".mail { "
                 + " float: right !important; "
                 + "} "
@@ -921,12 +1135,12 @@ public class ReporteMobil {
                 + "}  "
                 + "</style>"
                 + "<div    style=\"font-size: 1.1em;\"> "
-                + "                    <p  style=\"font-size: 1.1em;color: #7c8d87;\">" + "Resumen Diario-Facturaci&oacute;n Neta para:  " + mes + "/" + dia + "/" + año + "</p>"
+                + "                    <p  style=\"font-size: 1.1em;color: #7c8d87;\">" + "Resumen Diario-Facturaci&oacute;n Neta para: " + mes + "/" + dia + "/" + año + "</p>"
                 + "                     </div>"
                 + "<table  id = \"table\" class=\"sticky-enabled\" style=\"color:   black;font-size: 0.9em;border-collapse: separate;border-spacing: 2px;font-size: 12px;\">"
                 + "    <thead >"
                 + "    <tr style=\"color:   black;font-size: 0.9em;\"> "
-                + "    <th style=\"background-color: rgb(40,98,161);height: 41px;;color:white;\">Tipo</th>"
+                + "    <th style=\"background-color: rgb(40,98,161);height: 41px;color:white;\">Tipo</th>"
                 + "    <th style=\"background-color: #ebebeb;color:#2862a1;color:#2862a1;\">D&iacute;a</th>"
                 + "    <th style=\"background-color: rgb(40,98,161);;color:white;\">Proy.</th>"
                 + "    <th style=\"background-color: #ebebeb;color:#2862a1;color:#2862a1;\">Ppto.</th>"

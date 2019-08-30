@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 
 public class connectDS {
 
-    public Connection conn() throws SQLServerException {
+    public Connection conn_country() throws SQLServerException {
         Connection con = null;
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setIntegratedSecurity(false);
@@ -30,7 +30,31 @@ public class connectDS {
 //        ds.setDatabaseName("CTY_PRI");
         con = ds.getConnection();
         return con;
+    }
 
+    public Connection conn_colina() throws SQLServerException {
+        Connection con = null;
+        SQLServerDataSource ds = new SQLServerDataSource();
+        ds.setIntegratedSecurity(false);
+        /**
+         * Producción
+         */
+        ds.setUser("conexion");
+        ds.setPassword("Server2011_Acceso.");
+        ds.setServerName("10.10.131.48");
+        ds.setPortNumber(1047);
+        ds.setDatabaseName("Estadistica");
+
+        /**
+         * Pruebas
+         */
+//        ds.setUser("pruebas");
+//        ds.setPassword("123");
+//        ds.setServerName("10.10.131.29");
+//        ds.setPortNumber(1433);
+//        ds.setDatabaseName("Estadistica");
+        con = ds.getConnection();
+        return con;
     }
 
     public String obtenerUltimoMes() {
@@ -42,7 +66,7 @@ public class connectDS {
         String mes = null;
         try {
             String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 1,2 )))AS Mes1,Mes,FechaRegistro FROM InformeDiario  order by (FechaRegistro)  desc ";
-            con = this.conn();
+            con = this.conn_country();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -89,7 +113,7 @@ public class connectDS {
 
         try {
             String sql;
-            con = this.conn();
+            con = this.conn_country();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             sql = Sql.SQL_INICIO.replace("???", mes);
@@ -138,6 +162,63 @@ public class connectDS {
 
     }
 
+    public Double[] obtenerDatosColinaMes(String mes) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        Statement stmt = null;
+        Double[] datos = null;
+
+        try {
+            String sql;
+            con = this.conn_colina();
+            // Execute a stored procedure that returns some data.
+            stmt = con.createStatement();
+            sql = Sql.SQL_INICIO_COLINA.replace("???", mes);
+            System.err.println(">>>" + sql);
+            stmt.execute(sql);
+            datos = new Double[2];
+            datos[0] = 0D;
+            datos[1] = 0D;
+            rs = stmt.executeQuery(Sql.SQL_SELECT_COLINA);
+            while (rs.next()) {
+                datos[0] = rs.getDouble("PorFacturarConEgreso");
+                datos[1] = rs.getDouble("PacientesAcostados");
+
+            }
+
+            stmt.execute(Sql.SQL_DROP_COLINA);
+
+            // Iterate through the data in the result set and display it.
+        } // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return datos;
+    }
+
     public String obtenerUltimoMesColina() {
 
         Connection con = null;
@@ -146,8 +227,8 @@ public class connectDS {
         Statement stmt = null;
         String mes = null;
         try {
-            String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 1,2 )))AS Mes1,Mes,FechaRegistro FROM InformeDiarioCol  order by (FechaRegistro)  desc ";
-            con = this.conn();
+            String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 1,2 )))AS Mes1,Mes,FechaRegistro FROM InformeDiarioSahiCol  order by (FechaRegistro)  desc ";
+            con = this.conn_colina();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -197,7 +278,7 @@ public class connectDS {
         int dia = 0;
         try {
             String sql = "SELECT  (DAY(GETDATE())) as dia";
-            con = this.conn();
+            con = this.conn_country();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -244,7 +325,7 @@ public class connectDS {
         String mes = null;
         try {
             String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1,Mes,FechaRegistro FROM InformeDiario WHERE  MONTH(FechaRegistro)= MONTH(GETDATE())-1 and YEAR(FechaRegistro) = YEAR(GETDATE())   order by (FechaRegistro)  desc  ";
-            con = this.conn();
+            con = this.conn_country();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -289,8 +370,8 @@ public class connectDS {
         Statement stmt = null;
         String mes = null;
         try {
-            String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1,Mes,FechaRegistro FROM InformeDiarioCol WHERE  MONTH(FechaRegistro)= MONTH(GETDATE())-1 and YEAR(FechaRegistro) = YEAR(GETDATE())   order by (FechaRegistro)  desc  ";
-            con = this.conn();
+            String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1,Mes,FechaRegistro FROM InformeDiarioSahiCol WHERE  MONTH(FechaRegistro)= MONTH(GETDATE())-1 and YEAR(FechaRegistro) = YEAR(GETDATE())   order by (FechaRegistro)  desc  ";
+            con = this.conn_colina();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -336,7 +417,7 @@ public class connectDS {
         String mes = null;
         try {
             String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1,Mes,FechaRegistro FROM InformeDiario WHERE  MONTH(FechaRegistro)= MONTH(GETDATE()) and YEAR(FechaRegistro) = YEAR(GETDATE())   order by (FechaRegistro)  desc ";
-            con = this.conn();
+            con = this.conn_country();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -381,8 +462,8 @@ public class connectDS {
         Statement stmt = null;
         String mes = null;
         try {
-            String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1,Mes,FechaRegistro FROM InformeDiarioCol WHERE  MONTH(FechaRegistro)= MONTH(GETDATE()) and YEAR(FechaRegistro) = YEAR(GETDATE())   order by (FechaRegistro)  desc ";
-            con = this.conn();
+            String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1,Mes,FechaRegistro FROM InformeDiarioSahiCol WHERE  MONTH(FechaRegistro)= MONTH(GETDATE()) and YEAR(FechaRegistro) = YEAR(GETDATE())   order by (FechaRegistro)  desc ";
+            con = this.conn_colina();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -433,17 +514,17 @@ public class connectDS {
             + "  "
             + "            where MONTH(FechaRegistro)= MONTH(GETDATE()) and YEAR(FechaRegistro) = YEAR(GETDATE())  ";
 
-    public static String SQL_DIA_NORMAL_COLINA = "SELECT     TCamas, (Unidad+Hospi) as Ocupadas,Unidad as CriticoO, Hospi as NoCriticoO,  "
+    public static String SQL_DIA_NORMAL_COLINA = "            SELECT     TCamas, (Unidad+Hospi) as Ocupadas,Unidad as CriticoO, Hospi as NoCriticoO,  "
             + "  "
             + "                  (Critico-Unidad-MantCri)+(NCritico-Hospi-MantNcri)as Disponible,  "
             + "  "
-            + "                  (Critico-Unidad-MantCri) as Critico, (NCritico-Hospi-MantNcri)as NoCritico , MantTot, MantCri, MantNcri, HPendientes, SProbables, CxSProgram, EgrHospi,(CxProg+Partos) as CxProgramada ,  "
+            + "                  (Critico-Unidad-MantCri) as Critico, (NCritico-Hospi-MantNcri)as NoCritico , MantTot, MantCri, MantNcri, HPendientes, SProbables, CxSProgram, EgrHospi,(CxProg+Partos)as CxProgramada ,  "
             + "  "
-            + "                  (Cra15)as Cra15, Cra16, CDiag, CxAmb, (CxHosp) as CxHosp,(Partos+Cesareas) as Par_Ces,Partos,Cesareas, UrgT, UrgA, UrgP, UrgO,  "
+            + "                  (Cra15+Partos)as Cra15, Cra16, CDiag, CxAmb, (CxHosp-Cesareas) as CxHosp,(Partos+Cesareas) as Par_Ces,Partos,Cesareas, UrgT, UrgA, UrgP, UrgO,  "
             + "  "
             + "                                                 IUrg, DUrCxMa, DUrgMed, Mes, Dia, FacNeta, FecInfo,FechaRegistro,LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1, YEAR(fecinfo) as Año  "
             + "  "
-            + "            FROM         InformeDiarioCol  "
+            + "            FROM         InformeDiarioSahiCol"
             + "  "
             + "            where MONTH(FechaRegistro)= MONTH(GETDATE()) and YEAR(FechaRegistro) = YEAR(GETDATE())  ";
 
@@ -456,19 +537,14 @@ public class connectDS {
             + "            "
             + "                      where MONTH(FechaRegistro)= MONTH((GETDATE())-1) and YEAR(FechaRegistro) = YEAR((GETDATE())-1) ";
 
-    public static String SQL_PRIMER_DIA_COLINA = " SELECT     TCamas, (Unidad+Hospi) as Ocupadas,Unidad as CriticoO, Hospi as NoCriticoO,  "
-            + "  "
-            + "                        (Critico-Unidad-MantCri)+(NCritico-Hospi-MantNcri)as Disponible,  "
-            + "  "
-            + "                        (Critico-Unidad-MantCri) as Critico, (NCritico-Hospi-MantNcri)as NoCritico , MantTot, MantCri, MantNcri, HPendientes, SProbables, CxSProgram,EgrHospi, (CxProg+Partos) as CxProgramada ,  "
-            + "  "
-            + "                        (Cra15)as Cra15, Cra16, CDiag, CxAmb, (CxHosp-Cesareas) as CxHosp,(Partos+Cesareas) as Par_Ces,Partos,Cesareas, UrgT, UrgA, UrgP, UrgO,  "
-            + "  "
-            + "                                                       IUrg, DUrCxMa, DUrgMed, Mes, Dia, FacNeta, FecInfo,FechaRegistro,LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1, YEAR(fecinfo) as Año  "
-            + "  "
-            + "            FROM         InformeDiarioCol  "
-            + "  "
-            + "             where MONTH(FechaRegistro)= MONTH((GETDATE())-1) and YEAR(FechaRegistro) = YEAR((GETDATE())-1)   ";
+    public static String SQL_PRIMER_DIA_COLINA = "            SELECT     TCamas, (Unidad+Hospi) as Ocupadas,Unidad as CriticoO, Hospi as NoCriticoO,              "
+            + "                                   (Critico-Unidad-MantCri)+(NCritico-Hospi-MantNcri)as Disponible,              "
+            + "                                   (Critico-Unidad-MantCri) as Critico, (NCritico-Hospi-MantNcri)as NoCritico , MantTot, MantCri, MantNcri, HPendientes, SProbables, CxSProgram,EgrHospi, (CxProg+Partos)as CxProgramada ,              "
+            + "                                    (Cra15+Partos)as Cra15, Cra16, CDiag, CxAmb, (CxHosp-Cesareas) as CxHosp,(Partos+Cesareas) as Par_Ces,Partos,Cesareas, UrgT, UrgA, UrgP, UrgO,              "
+            + "                                                               IUrg, DUrCxMa, DUrgMed, Mes, Dia, FacNeta, FecInfo,FechaRegistro,LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1, YEAR(fecinfo) as Año              "
+            + "                       FROM         InformeDiarioSahiCol"
+            + "            "
+            + "                      where MONTH(FechaRegistro)= MONTH((GETDATE())-1) and YEAR(FechaRegistro) = YEAR((GETDATE())-1) ";
 
     public String getSql(String mes) {
         String sql = "IF((DAY(GETDATE()) )= 01)  "
@@ -514,9 +590,7 @@ public class connectDS {
                 + "      BEGIN  "
                 + "  "
                 + "  "
-                + "      END  "
-                + "  "
-                + " ";;
+                + "      END  ";
         return sql;
     }
 
@@ -529,13 +603,13 @@ public class connectDS {
                 + "  "
                 + "                        (Critico-Unidad-MantCri)+(NCritico-Hospi-MantNcri)as Disponible,  "
                 + "  "
-                + "                        (Critico-Unidad-MantCri) as Critico, (NCritico-Hospi-MantNcri)as NoCritico , MantTot, MantCri, MantNcri, HPendientes, SProbables, CxSProgram, (CxProg) as CxProgramada ,  "
+                + "                        (Critico-Unidad-MantCri) as Critico, (NCritico-Hospi-MantNcri)as NoCritico , MantTot, MantCri, MantNcri, HPendientes, SProbables, CxSProgram, (CxProg+Partos)as CxProgramada ,  "
                 + "  "
-                + "                        (Cra15)as Cra15, Cra16, CDiag, CxAmb, (CxHosp) as CxHosp,(Partos+Cesareas) as Par_Ces,Partos,Cesareas, UrgT, UrgA, UrgP, UrgO,  "
+                + "                        (Cra15+Partos)as Cra15, Cra16, CDiag, CxAmb, (CxHosp-Cesareas) as CxHosp,(Partos+Cesareas) as Par_Ces,Partos,Cesareas, UrgT, UrgA, UrgP, UrgO,  "
                 + "  "
                 + "                                                       IUrg, DUrCxMa, DUrgMed, Mes, Dia, FacNeta, FecInfo,FechaRegistro,LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1, YEAR(fecinfo) as Año  "
                 + "  "
-                + "            FROM         InformeDiarioCol  "
+                + "            FROM         InformeDiarioSahiCol"
                 + "  "
                 + "            where MONTH(FechaRegistro)= MONTH(GETDATE())-1 and YEAR(FechaRegistro) = YEAR(GETDATE())  "
                 + "  "
@@ -545,13 +619,13 @@ public class connectDS {
                 + "  "
                 + "                        (Critico-Unidad-MantCri)+(NCritico-Hospi-MantNcri)as Disponible,  "
                 + "  "
-                + "                        (Critico-Unidad-MantCri) as Critico, (NCritico-Hospi-MantNcri)as NoCritico , MantTot, MantCri, MantNcri, HPendientes, SProbables, CxSProgram, (CxProg) as CxProgramada ,  "
+                + "                        (Critico-Unidad-MantCri) as Critico, (NCritico-Hospi-MantNcri)as NoCritico , MantTot, MantCri, MantNcri, HPendientes, SProbables, CxSProgram, (CxProg+Partos)as CxProgramada ,  "
                 + "  "
-                + "                        (Cra15)as Cra15, Cra16, CDiag, CxAmb, (CxHosp) as CxHosp,(Partos+Cesareas) as Par_Ces,Partos,Cesareas, UrgT, UrgA, UrgP, UrgO,  "
+                + "                        (Cra15+Partos)as Cra15, Cra16, CDiag, CxAmb, (CxHosp-Cesareas) as CxHosp,(Partos+Cesareas) as Par_Ces,Partos,Cesareas, UrgT, UrgA, UrgP, UrgO,  "
                 + "  "
                 + "                                                       IUrg, DUrCxMa, DUrgMed, Mes, Dia, FacNeta, FecInfo,FechaRegistro,LTRIM(RTRIM(SUBSTRING(Mes, 3,10 )))AS Mes1, YEAR(fecinfo) as Año  "
                 + "  "
-                + "            FROM         InformeDiarioCol  "
+                + "            FROM         InformeDiarioSahiCol"
                 + "  "
                 + "            where MONTH(FechaRegistro)= MONTH(GETDATE()) and YEAR(FechaRegistro) = YEAR(GETDATE())  "
                 + "  "
@@ -564,9 +638,7 @@ public class connectDS {
                 + "      BEGIN  "
                 + "  "
                 + "  "
-                + "      END  "
-                + "  "
-                + " ";;
+                + "      END  ";
         return sql;
     }
 
@@ -686,7 +758,7 @@ public class connectDS {
         DateFormat df = new SimpleDateFormat("yyyyMMdd"); //2017-01-19
         try {
 
-            con = this.conn();
+            con = this.conn_country();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -894,7 +966,7 @@ public class connectDS {
         String mes = null;
         try {
             String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 1,2 )))AS Mes1,Mes,FechaRegistro FROM InformeDiario  order by (FechaRegistro)  desc ";
-            con = this.conn();
+            con = this.conn_country();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -939,8 +1011,8 @@ public class connectDS {
         Statement stmt = null;
         String mes = null;
         try {
-            String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 1,2 )))AS Mes1,Mes,FechaRegistro FROM InformeDiarioCol  order by (FechaRegistro)  desc ";
-            con = this.conn();
+            String sql = "SELECT  LTRIM(RTRIM(SUBSTRING(Mes, 1,2 )))AS Mes1,Mes,FechaRegistro FROM InformeDiarioSahiCol  order by (FechaRegistro)  desc ";
+            con = this.conn_colina();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -977,7 +1049,7 @@ public class connectDS {
 
     }
 
-    public String obtenerTablaColina(String sql, String strMes, boolean numeros) {
+    public String obtenerTablaColina(String sql, String strMes, boolean noFacturado, boolean Numeros) {
 
         float contador = 0;
         float Dia = 0;
@@ -1011,6 +1083,8 @@ public class connectDS {
         float DUrgMed = 0;
         float FacNeta = 0;
         float EgrHospi = 0;
+        float sumaNofacturadoHab = 0;
+        float sumaNofacturadoInhab = 0;
         Float porcentaje = 0F;
         String par = "style='background-color: #CADBE7; transition: all .125s ease-in-out;'";
         String resultado = " <style>"
@@ -1065,12 +1139,18 @@ public class connectDS {
                 + "    <th style=\"min-width: 48px;background-color: #9293A3;\">"
                 + "       Ingreso"
                 + "    </th>";
-        if (numeros) {
-            resultado = resultado + "    <th style=\"min-width: 48px;background-color: rgb(40,98,161);\">"
+        if (noFacturado) {
+            resultado = resultado + "<th style=\"min-width: 48px;background-color: rgb(40,98,161);\">"
+                    + "Por facturar pac. activos</th>"
+                    + "    <th style=\"min-width: 48px;background-color: #9293A3;\">"
+                    + "       Por facturar pac. inactivos"
+                    + "    </th>";
+        }
+        if (Numeros) {
+            resultado = resultado + "<th style=\"min-width: 48px;background-color: rgb(40,98,161);\">"
                     + "Facturaci&oacute;n Neta</th>";
         }
-        resultado = resultado + "</tr>"
-                + "    </thead>"
+        resultado = resultado + "</tr>" + "    </thead>"
                 + "    <tbody>";
 
         Connection con = null;
@@ -1080,9 +1160,12 @@ public class connectDS {
         String mes = null;
         resultado = resultado + "";
         NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(2);
+        nf.setMinimumFractionDigits(0);
+        DateFormat df = new SimpleDateFormat("yyyyMMdd"); //2017-01-19
         try {
 
-            con = this.conn();
+            con = this.conn_colina();
             // Execute a stored procedure that returns some data.
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -1090,6 +1173,7 @@ public class connectDS {
             while (rs.next()) {
                 i++;
                 porcentaje = 0F;
+                Date fecha = rs.getDate("FecInfo");
                 if (rs.getFloat("TCamas") == 0) {
                     HPendientes += rs.getFloat("HPendientes");
                     SProbables += rs.getFloat("SProbables");
@@ -1193,9 +1277,21 @@ public class connectDS {
                 resultado = resultado + "<td> ";
                 resultado = resultado + (rs.getInt("IUrg") == 0 ? '-' : nf.format(rs.getInt("IUrg")));
                 resultado = resultado + "</td>";
-                if (numeros) {
+                if (noFacturado) {
+                    Double[] datos = obtenerDatosColinaMes(df.format(fecha));
+                    sumaNofacturadoHab = datos[0].floatValue();
+                    sumaNofacturadoInhab = datos[1].floatValue();
                     resultado = resultado + "<td>";
-                    resultado = resultado + (rs.getInt("FacNeta") == 0 ? "-" : "$" + nf.format(rs.getInt("FacNeta")));
+                    resultado = resultado + (datos[0] == 0D ? "-" : "$" + nf.format(datos[0]));
+                    resultado = resultado + "</td>";
+
+                    resultado = resultado + "<td>";
+                    resultado = resultado + (datos[1] == 0D ? "-" : "$" + nf.format(datos[1]));
+                    resultado = resultado + "</td>";
+                }
+                if (Numeros) {
+                    resultado = resultado + "<td>";
+                    resultado = resultado + (rs.getLong("FacNeta") == 0 ? "-" : "$" + nf.format(rs.getLong("FacNeta")));
                     resultado = resultado + "</td>";
                 }
                 resultado = resultado + "</tr>";
@@ -1255,11 +1351,14 @@ public class connectDS {
         resultado = resultado + "<td style=\"color: #FFFFFF;background-color: rgb(40,98,161);\">" + nf.format((int) UrgT) + "</td>";
 
         resultado = resultado + "<td style=\"color: #FFFFFF;background-color: #9293A3;\">" + nf.format((int) IUrg) + "</td>";
-        if (numeros) {
-            resultado = resultado + "<td style=\"color: #FFFFFF;background-color:#FF2020\">" + formatter.format((long) FacNeta) + "</td>";
-        }
 
-        resultado = resultado + "</tr>  </tfoot>";
+        if (noFacturado) {
+            resultado = resultado + "<td style=\"color: #FFFFFF;background-color:#FF2020\">" + formatter.format((long) sumaNofacturadoHab) + "</td>";
+            resultado = resultado + "<td style=\"color: #FFFFFF;background-color:#FF2020\">" + formatter.format((long) sumaNofacturadoInhab) + "</td> ";
+        }
+        if (Numeros) {
+            resultado = resultado + "<td style=\"color: #FFFFFF;background-color:#FF2020\">" + formatter.format((long) FacNeta) + "</td></tr>  </tfoot>";
+        }
         resultado = resultado + "</table>";
 
         return resultado;
