@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="jMenu2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ayuda"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Como debo escribir los correos? "/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Menu>
+  </NonVisualComponents>
+  <SyntheticProperties>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel3" min="-2" pref="216" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jtHora" min="-2" pref="125" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="477" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="btnIniciar" min="-2" pref="116" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnDetener" min="-2" pref="105" max="-2" attributes="0"/>
+                      <EmptySpace pref="263" max="32767" attributes="0"/>
+                      <Component id="btnCerrar1" min="-2" pref="166" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnCerrar" min="-2" pref="122" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jScrollPane3" min="-2" pref="848" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtHora" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane3" min="-2" pref="217" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnIniciar" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnCerrar" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="btnCerrar1" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="btnDetener" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JButton" name="btnIniciar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Iniciar envio"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIniciarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCerrar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cerrar aplicacion"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnDetener">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Detener "/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDetenerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Destinatarios"/>
+        <Property name="toolTipText" type="java.lang.String" value="Correos electr&#xf3;nicos a enviar el reporte, separados por coma, Ej: email1@clinicadelcountry.com,email2@clinicadelcountry.com "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Hora de envio de reporte (Formato 24h): "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtHora">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtHoraActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCerrar1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Correr en segundo plano"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrar1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="jTMails">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;&#x9;&#x9;{null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null},&#xa;        {null, null, null, null, null, null,null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;E-mail&quot;, &quot;Reporte completo Country&quot;, &quot;Reporte M&#xf3;vil Country&quot;, &quot;Reporte completo Colina&quot;, &quot;Reporte M&#xf3;vil Colina&quot;, &quot;Sin facturar&quot;,&quot;Sin montos&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, &#xa;java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;}" type="code"/>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0"/>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
