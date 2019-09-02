@@ -19,10 +19,10 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailDelegate {
 
-    private static final String SMTP_HOST_NAME = "smtp-relay.gmail.com";//"smtp.gmail.com"; //smtp URL
-    private static final int SMTP_HOST_PORT = 25;//587; //port number
-    public static final String EMAIL = "notificacion@clinicadelcountry.com";
-    public static final String PASSWORD = "Cdc18092013";
+    private static final String SMTP_HOST_NAME = "smtp.gmail.com";//"smtp-relay.gmail.com";//smtp URL
+    private static final int SMTP_HOST_PORT = 587;//25;//port number
+    public static final String EMAIL = "camilotorres.9576@gmail.com";//"notificacion@clinicadelcountry.com";
+    public static final String PASSWORD = "torres21283";//"Cdc18092013";
 
     //  public static final String mails = "abenitez@clinicadelcountry.com";
     //nmacaya@clinicadelcountry.com,cgonzalez@clinicadelcountry.com,jospina@clinicadelcountry.com,cvelasco@clinicadelcountry.com,acorrea@clinicadelcountry.com,lgomez@clinicadelcountry.com,avelasquez@clinicadelcountry.com,//
@@ -66,7 +66,8 @@ public class EmailDelegate {
             props.put("mail.smtp.starttls.enable", "true");
             props.put("mail.smtp.auth", "true");
             props.put("mail.debug", "true");
-            props.put("mail.smtp.ehlo", "false");
+            props.put("mail.smtp.helo", "false");
+//            props.put("mail.smtp.ehlo", "false");
             props.setProperty("mail.user", EMAIL);
             props.setProperty("mail.password", PASSWORD);
             props.put("mail.smtp.port", SMTP_HOST_PORT);

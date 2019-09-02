@@ -978,25 +978,27 @@ public class ReporteMobil {
                 resultado = resultado + "</td>";
                 resultado = resultado + "</tr>";
 
-                resultado = resultado + "<tr class='grid'>";
-                resultado = resultado + "<td> ";
-                resultado = resultado + "CDiag.";
-                resultado = resultado + "</td>";
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("CDiag"));
-                resultado = resultado + "</td>";
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("CDiagProy"));
-                resultado = resultado + "</td>";
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + "" + nf.format(rs.getLong("TCXCDPto"));
-                resultado = resultado + "</td>";
-                resultado = resultado + "<td style='text-align:  right;'> ";
-                resultado = resultado + color(df.format((float) (rs.getFloat("cumpDiag") * 100)) + "%", rs.getInt("ClrDiag"));
-                resultado = resultado + "</td>";
-                resultado = resultado + "</tr>";
+//                resultado = resultado + "<tr class='grid'>";
+//                resultado = resultado + "<td> ";
+//                resultado = resultado + "CDiag.";
+//                resultado = resultado + "</td>";
+//                resultado = resultado + "<td style='text-align:  right;'> ";
+//                resultado = resultado + "" + nf.format(rs.getLong("CDiag"));
+//                resultado = resultado + "</td>";
+//                resultado = resultado + "<td style='text-align:  right;'> ";
+//                resultado = resultado + "" + nf.format(rs.getLong("CDiagProy"));
+//                resultado = resultado + "</td>";
+//                resultado = resultado + "<td style='text-align:  right;'> ";
+//                resultado = resultado + "" + nf.format(rs.getLong("TCXCDPto"));
+//                resultado = resultado + "</td>";
+//                resultado = resultado + "<td style='text-align:  right;'> ";
+//                resultado = resultado + color(df.format((float) (rs.getFloat("cumpDiag") * 100)) + "%", rs.getInt("ClrDiag"));
+//                resultado = resultado + "</td>";
+//                resultado = resultado + "</tr>";
 
-                resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
+
+                resultado = resultado + "<tr class='grid'>";
+//                resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
 
                 resultado = resultado + "<td style='font-weight: 900;'> ";
                 resultado = resultado + "Urg";
@@ -1018,7 +1020,8 @@ public class ReporteMobil {
 
                 resultado = resultado + "</tr>";
 
-                resultado = resultado + "<tr class='grid'>";
+//                resultado = resultado + "<tr class='grid'>";
+                resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
 
                 resultado = resultado + "<td style='font-weight: 900;'> ";
                 resultado = resultado + "Ing Urg";
@@ -1041,7 +1044,8 @@ public class ReporteMobil {
                 resultado = resultado + "</tr>";
 
                 if (numeros) {
-                    resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
+                    resultado = resultado + "<tr class='grid'>";
+//                    resultado = resultado + "<tr class='grid' style='background-color: #CADBE7;transition: all .125s ease-in-out;'>";
 
                     resultado = resultado + "<td style='font-weight: 900;'> ";
                     resultado = resultado + "Total Fac. Neta M$";

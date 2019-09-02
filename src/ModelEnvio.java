@@ -36,9 +36,7 @@ public class ModelEnvio implements  Serializable{
 
     public void setHora(int hora) {
         this.hora = hora;
-    }
-
-    
+    }    
     
     public String getMail() {
         return mail;
