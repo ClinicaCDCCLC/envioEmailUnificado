@@ -19,8 +19,8 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailDelegate {
 
-    private static final String SMTP_HOST_NAME = "smtp-relay.gmail.com";//"smtp.gmail.com";//smtp URL
-    private static final int SMTP_HOST_PORT = 25;//587;//port number
+    private static final String SMTP_HOST_NAME = "smtp.gmail.com";//"smtp-relay.gmail.com";//smtp URL
+    private static final int SMTP_HOST_PORT = 465;//587;//25;//port number
     public static final String EMAIL = "notificacion@clinicadelcountry.com";
     public static final String PASSWORD = "Cdc18092013";
 
@@ -35,7 +35,7 @@ public class EmailDelegate {
         for (int i = 0; i < to.size(); i++) {
             destinos = destinos + to.get(i) + (i == to.size() ? "" : ",");
         }
-
+        
         resultado = "";
 
         Thread t = new Thread(new Runnable() {
@@ -63,14 +63,20 @@ public class EmailDelegate {
             Properties props = System.getProperties();
             props.setProperty("mail.transport.protocol", "smtp");
             props.setProperty("mail.host", SMTP_HOST_NAME);
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.debug", "true");
-//            props.put("mail.smtp.helo", "false");
-            props.put("mail.smtp.ehlo", "false");
             props.setProperty("mail.user", EMAIL);
             props.setProperty("mail.password", PASSWORD);
             props.put("mail.smtp.port", SMTP_HOST_PORT);
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.debug", "true");
+            
+            props.put("mail.smtp.socketFactory.port", SMTP_HOST_PORT);
+            props.put("mail.smtp.socketFactory.class",
+                    "javax.net.ssl.SSLSocketFactory");
+            
+//            props.put("mail.smtp.starttls.enable", "true");
+            
+//            props.put("mail.smtp.helo", "false");
+//            props.put("mail.smtp.ehlo", "false");
 
             Session mailSession = Session.getInstance(props,
                     new javax.mail.Authenticator() {
@@ -84,10 +90,12 @@ public class EmailDelegate {
             message.setSubject(subject);
             message.setFrom(new InternetAddress(EMAIL));
             message.setContent(text, "text/html");
-
+                        
             for (String to1 : to) {
+                System.out.println(to);
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(to1));
             }
+                        
             Transport transport = mailSession.getTransport();
             transport.connect(SMTP_HOST_NAME, SMTP_HOST_PORT, EMAIL, PASSWORD);
             transport.sendMessage(message,
@@ -98,7 +106,6 @@ public class EmailDelegate {
             System.err.println(ex.toString());
             return false;
         }
-
     }
 
     public static int strToInt(String txt) {
@@ -108,5 +115,4 @@ public class EmailDelegate {
             return -1;
         }
     }
-
 }
